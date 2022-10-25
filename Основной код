@@ -1,0 +1,40 @@
+%%Filterdesign 
+freqArray = [31, 62, 125, 250, 500, 1000, 2000, 4000, 8000, 16000];
+order = 1024; 
+fS = 44100;
+%punkt3
+bBank = CreatingFilters(freqArray, order, fS);
+nums = randperm(10,3);
+bTmp=bBank(nums,:); 
+
+%punkt4
+for i=1:3
+    [H(i, :), w(i, :)] = freqz(bTmp(i,:), 1, order);
+end
+%punkt 5
+x_db=@(x)20*log10(x);
+%punkt6
+H_db=x_db(abs(H));
+w=(w/pi)*(fS/2);
+%punkt7
+%Graph with standard functions 
+figure;
+plot(w,H_db(1,:),'-k','LineWidth',1); hold on
+plot(w,H_db(2,:),':*b','LineWidth',1);
+plot(w,H_db(3,:),'-.rs','LineWidth',1);
+legend('Filter№1','Filter№2','Filter№3'); 
+xlim([0,21000]);
+ylim([-60,10]);
+xticks([2000,8000,16000]);
+xticklabels({'2kHz','8kHz','16kHz'});
+%punkt8
+%Graph with changing object properties
+f=figure('DefaultAxesFontSize',14);
+ax=axes;
+p1 = plot(w,H_db(1,:),'-k','LineWidth',1); hold on
+p2 = plot(w,H_db(2,:),':*b','LineWidth',1);
+p3 = plot(w,H_db(3,:),'-.rs','LineWidth',1);
+PropNames = {'XLim','YLim'};
+PropValues= {[0,21000],[-60,10]};
+
+set(ax,PropNames,PropValues);
