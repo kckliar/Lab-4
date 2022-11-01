@@ -16,7 +16,7 @@ x_db=@(x)20*log10(x);
 %punkt6
 H_db=x_db(abs(H));
 w=(w/pi)*(fS/2);
-%punkt7
+%% punkt7
 %Graph with standard functions 
 figure;
 plot(w,H_db(1,:),'-k','LineWidth',1); hold on
@@ -26,15 +26,36 @@ legend('Filter№1','Filter№2','Filter№3');
 xlim([0,21000]);
 ylim([-60,10]);
 xticks([2000,8000,16000]);
-xticklabels({'2kHz','8kHz','16kHz'});
-%punkt8
+xticklabels({'2kHz','8kHz','16kHz'});   
+%% punkt8
 %Graph with changing object properties
 f=figure('DefaultAxesFontSize',14);
 ax=axes;
-p1 = plot(w,H_db(1,:),'-k','LineWidth',1); hold on
-p2 = plot(w,H_db(2,:),':*b','LineWidth',1);
-p3 = plot(w,H_db(3,:),'-.rs','LineWidth',1);
-PropNames = {'XLim','YLim'};
-PropValues= {[0,21000],[-60,10]};
-
+p1 = plot(w(1,:),H_db(1,:)); hold on
+p2 = plot(w(2,:),H_db(2,:));
+p3 = plot(w(3,:),H_db(3,:));
+PropNames = {'XLim','YLim','XTick','XTickLabel'};
+PropValues= {[0,21000],[-60,10],[2000,8000,16000],{'2kHz','8kHz','16kHz'}};
+PropSettings = {'LineStyle','Color','LineWidth','Marker',};
+SetDo1 = {'-','k',1,'none'};
+SetDo2 = {':','b',1,'*'};
+SetDo3 = {'-.','r',1,'s'};
+set(p1,PropSettings,SetDo1);
+set(p2,PropSettings,SetDo2);
+set(p3,PropSettings,SetDo3);   
 set(ax,PropNames,PropValues);
+ax.XLabel.String='f,kHz';
+ax.XLabel.FontSize=16;
+ax.YLabel.String='H,dB';
+ax.YLabel.FontSize=16;
+ax.Title.String='Filters';
+PSGLGD=legend('Filter №1','Filter №2','Filter №3');
+f.Units='normalized';
+f.Position=[0 0 0.5 0.5];
+
+%% punkt9
+%Graph with no formatting
+p4 = plot(w(1,:),H_db(1,:)); hold on
+p5 = plot(w(2,:),H_db(2,:));
+p6 = plot(w(3,:),H_db(3,:));
+
