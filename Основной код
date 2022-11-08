@@ -59,3 +59,32 @@ p4 = plot(w(1,:),H_db(1,:)); hold on
 p5 = plot(w(2,:),H_db(2,:));
 p6 = plot(w(3,:),H_db(3,:));
 
+%% punkt12
+%Filtering of signals
+[signal, fS] = audioread('song.mp3');
+t =(0:length(signal)-1)/fS;
+s=sin(2*pi*15000*t);
+s=s';
+s=[s,s];
+sign=signal + s;
+%% punkt 13
+[pxx,f] = pspectrum(sign,fS);
+pffxDO = plot(f,pxx); hold on
+gain = [1,1,1,1,1,1,1,1,1,0]';
+initB=zeros(1,order);
+signalOut = FilteringBanks(sign,bBank,'fftfilt',gain,initB);
+[pxxn,fn]= pspectrum(signalOut,fS);
+%% punkt 14
+subplot(2,1,1);
+plot(f,pxx);
+
+subplot(2,1,2);
+plot(fn,pxxn);
+%% punkt 15
+%Spectrogram
+[s, f, t] = spectrogram(signal(:, 1), 2^10, [], freqArray, fS);
+[F, T] = meshgrid(f, t);
+%% punkt 16
+mesh(F, T, abs(s'));
+set(gca, 'Xscale', 'log')
+
