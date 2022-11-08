@@ -29,7 +29,7 @@ xticks([2000,8000,16000]);
 xticklabels({'2kHz','8kHz','16kHz'});   
 %% punkt8
 %Graph with changing object properties
-f=figure('DefaultAxesFontSize',14);
+fo=figure('DefaultAxesFontSize',14);
 ax=axes;
 p1 = plot(w(1,:),H_db(1,:)); hold on
 p2 = plot(w(2,:),H_db(2,:));
@@ -50,8 +50,8 @@ ax.YLabel.String='H,dB';
 ax.YLabel.FontSize=16;
 ax.Title.String='Filters';
 PSGLGD=legend('Filter №1','Filter №2','Filter №3');
-f.Units='normalized';
-f.Position=[0 0 0.5 0.5];
+fo.Units='normalized';
+fo.Position=[0 0 0.5 0.5];
 
 %% punkt9
 %Graph with no formatting
@@ -63,10 +63,10 @@ p6 = plot(w(3,:),H_db(3,:));
 %Filtering of signals
 [signal, fS] = audioread('song.mp3');
 t =(0:length(signal)-1)/fS;
-s=sin(2*pi*15000*t);
-s=s';
-s=[s,s];
-sign=signal + s;
+so=sin(2*pi*15000*t);
+so=so';
+so=[so,so];
+sign=signal + so;
 %% punkt 13
 [pxx,f] = pspectrum(sign,fS);
 pffxDO = plot(f,pxx); hold on
@@ -82,7 +82,7 @@ subplot(2,1,2);
 plot(fn,pxxn);
 %% punkt 15
 %Spectrogram
-[s, f, t] = spectrogram(signal(:, 1), 2^10, [], freqArray, fS);
+[s, f, t] = spectrogram(sign(:, 1), 2^10, [], freqArray, fS);
 [F, T] = meshgrid(f, t);
 %% punkt 16
 mesh(F, T, abs(s'));
